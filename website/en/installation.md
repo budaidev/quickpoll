@@ -157,9 +157,16 @@ Let's Encrypt checks.
 sudo mkdir -p /opt && cd /opt
 sudo git clone https://github.com/virtUOS/abstimmbar.git
 cd abstimmbar
+sudo git checkout release/1.0
 ```
 
 (The repository is public — no SSH key or credentials needed.)
+
+Production installations follow a **release line** (`release/1.0` for all
+1.0.x versions); `main` carries development of the next major version and
+is not meant for production. When a new major version appears, switch to
+its line (`release/2.0`) deliberately, after reading the operator notes in
+`CHANGELOG.md`.
 
 ### Step 7 — Create the configuration file
 
@@ -462,7 +469,8 @@ certificates (`/etc/abstimmbar/certs/`) stay untouched. Everything else —
 including `Caddyfile` and `docker-compose.prod.yml` — comes from git and is
 not changed locally (apart from the intended exceptions from step 8).
 
-**1. Get the new version.** Build from source:
+**1. Get the new version.** Build from source: (`git pull` fetches the newest
+version of your release line, e.g. 1.0.x; `git branch` shows it):
 
 ```bash
 cd /opt/abstimmbar
@@ -480,7 +488,7 @@ the matching tag (`sudo git fetch --tags && sudo git checkout v1.3.0`) so
 that `docker-compose.prod.yml`, `Caddyfile` and the image match:
 
 What changed in a release and what to watch out for when updating is in the
-[CHANGELOG](https://github.com/virtUOS/abstimmbar/blob/main/CHANGELOG.md)
+[CHANGELOG](https://github.com/virtUOS/abstimmbar/blob/release/1.0/CHANGELOG.md)
 (German) and the [release notes](https://github.com/virtUOS/abstimmbar/releases)
 – read the operator notes in particular before you update. The running
 version is shown in the application footer and in the admin area.

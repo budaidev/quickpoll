@@ -1,11 +1,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # Project website (MkDocs Material) → GitHub Pages. Pull requests only
-# build (strict), pushes to main also deploy.
+# build (strict); pushes to a release/* branch also deploy, so the site
+# always describes the stable line (main carries the next major).
 name: Docs site
 
 on:
   push:
-    branches: [main]
+    branches: [main, "release/*"]
     paths:
       - "website/**"
       - "docs/deployment.md"
@@ -48,15 +49,15 @@ jobs:
         run: mkdocs build --strict -f website/mkdocs.yml -d "${{ runner.temp }}/site"
       - name: Build site (English)
         run: mkdocs build --strict -f website/mkdocs.en.yml -d "${{ runner.temp }}/site/en"
-      - if: github.event_name != 'pull_request'
+      - if: startsWith(github.ref, 'refs/heads/release/')
         uses: actions/configure-pages@v6
-      - if: github.event_name != 'pull_request'
+      - if: startsWith(github.ref, 'refs/heads/release/')
         uses: actions/upload-pages-artifact@v5
         with:
           path: ${{ runner.temp }}/site
 
   deploy:
-    if: github.event_name != 'pull_request'
+    if: startsWith(github.ref, 'refs/heads/release/')
     needs: build
     runs-on: ubuntu-latest
     environment:

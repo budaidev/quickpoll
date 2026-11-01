@@ -141,9 +141,16 @@ prüft genau das.
 sudo mkdir -p /opt && cd /opt
 sudo git clone https://github.com/virtUOS/abstimmbar.git
 cd abstimmbar
+sudo git checkout release/1.0
 ```
 
 (Das Repository ist öffentlich — weder SSH-Key noch Zugangsdaten nötig.)
+
+Produktivinstallationen folgen einer **Release-Linie** (`release/1.0` für
+alle 1.0.x-Versionen); `main` enthält die Entwicklung der nächsten
+Hauptversion und ist nicht für den Betrieb gedacht. Bei einer neuen
+Hauptversion wechseln Sie bewusst auf deren Linie (`release/2.0`), nachdem
+Sie die Hinweise für den Betrieb im `CHANGELOG.md` gelesen haben.
 
 ### Schritt 7 — Konfigurationsdatei anlegen
 
@@ -448,7 +455,8 @@ Zertifikate (`/etc/abstimmbar/certs/`) bleiben unberührt. Alles andere —
 auch `Caddyfile` und `docker-compose.prod.yml` — kommt aus git und wird
 nicht lokal geändert (bis auf die vorgesehenen Ausnahmen aus Schritt 8).
 
-**1. Neuen Stand holen.** Aus dem Quellcode bauen:
+**1. Neuen Stand holen.** Aus dem Quellcode bauen (`git pull` holt die
+neueste Version Ihrer Release-Linie, z. B. 1.0.x; `git branch` zeigt sie):
 
 ```bash
 cd /opt/abstimmbar
@@ -467,7 +475,7 @@ sudo git checkout v1.3.0`), damit `docker-compose.prod.yml`, `Caddyfile`
 und Image zueinander passen:
 
 Was sich in einer Version geändert hat und was beim Update zu beachten ist,
-steht im [CHANGELOG](https://github.com/virtUOS/abstimmbar/blob/main/CHANGELOG.md)
+steht im [CHANGELOG](https://github.com/virtUOS/abstimmbar/blob/release/1.0/CHANGELOG.md)
 und in den [Release Notes](https://github.com/virtUOS/abstimmbar/releases) –
 lesen Sie vor allem die „Hinweise für den Betrieb“, bevor Sie aktualisieren.
 Die laufende Version sehen Sie in der Fußzeile der Anwendung und im
