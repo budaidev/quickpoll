@@ -236,6 +236,14 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 25,
 }
 
+# quickpoll fork: bearer tokens for API clients (the MCP server), "token=username,…".
+# The class is always installed (DRF binds it at import); it is a no-op while unset.
+from accounts.token_auth import parse_tokens  # noqa: E402
+
+API_TOKENS = parse_tokens(os.environ.get("API_TOKENS", ""))
+# Appended after SessionAuthentication, so unauthenticated responses keep their 403.
+REST_FRAMEWORK["DEFAULT_AUTHENTICATION_CLASSES"].append("accounts.token_auth.ApiTokenAuthentication")
+
 # Optional AI features via a LiteLLM proxy (see common/ai.py). Off unless
 # fully configured; "enabled" is derived from these, not a separate flag.
 # Env is read at startup — changing it needs a container recreate.
