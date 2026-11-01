@@ -191,6 +191,13 @@ Bilder; innerhalb der Instanz kein Problem).
 - Nicht-anonyme Durchführungen (OIDC-/LTI-authentifizierte Teilnahme),
   als Grundlage für **AGS** (Noten-Rückmeldung ans LMS).
 
+### Nach 1.0 (Stand November 2026)
+
+Version 1.0.0 ist am 22.10.2026 erschienen (`CHANGELOG.md`). Seitdem gibt es
+zwei Linien: `release/1.0` für Wartung (1.0.x) und `main` für 2.0. Die
+2.0-Themen werden zuerst als Specs ausgearbeitet; Tickets #200 und #4
+laufen unabhängig davon in der 1.x-Linie bzw. bei anderen Beteiligten.
+
 ### Ausblick
 
 - Priorisierung, Schätzfragen, **Slider** (numerisch, Default 0–100 %,

@@ -58,14 +58,27 @@ Never write content via the bare `obj.title` accessor (it follows the active
 UI language, which diverges from the canonical) — set `*_de`/`*_en`
 explicitly, and resolve to canonical for CSV/AI prompts (`resolve_translated_text`).
 
-## Branching workflow (since July 2026)
+## Branching workflow (since July 2026, release lines since 1.0)
 
-Simplified Gitflow (GitLab Flow): **no direct pushes to `main`** — it is
-protected (push: no one; merge: maintainers). Work on `feature/<slug>`
-branches, open a Merge Request, merge requires a green pipeline; the
-source branch is auto-deleted on merge. Reference issues in the MR
-description (`Closes #<n>`). No `develop` branch until there is a
-production deployment.
+Simplified Gitflow (GitLab Flow with release branches): **no direct pushes
+to `main` or `release/*`** — both are protected (push: no one; merge:
+maintainers). Work on `feature/<slug>` / `fix/<slug>` branches, open a PR,
+merge requires a green pipeline; the source branch is auto-deleted on
+merge. Reference issues in the PR description (`Closes #<n>`).
+
+- **`main`** is the development line for the next major (2.0). Features
+  and refactors go here; specs first (`docs/superpowers/`), then code.
+- **`release/1.0`** is the maintenance line of the released 1.0.x: bug
+  fixes, security and dependency patches, doc corrections. Fix there
+  first (PR against `release/1.0`), then merge `release/1.0` into `main`
+  ("merge up"); switch to cherry-picks only once `main` has diverged.
+- Tags `v1.0.x` are set on `release/1.0`, `v2.0.0` later on `main`; the
+  release workflow builds images for every `v*` tag (`X.Y.Z`, `vX.Y.Z`
+  and `latest`). `latest` stays on the newest *stable* line; pre-releases
+  of the next major use tags like `v2.0.0-beta.1` without `latest`.
+- The website (GitHub Pages) deploys from `release/*` pushes only, so the
+  guide always describes the stable line; `main` and PRs build it (strict)
+  without deploying.
 
 ## Tech stack (decided, ADR-0001)
 
